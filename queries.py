@@ -4,14 +4,23 @@ def select_all(cursor: object):
     for row in results:
         print(row)
 
-def create_table(cursor: object):
+def view_contract_summary(cursor: object, id: int):
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Contracts(
-            id INTEGER PRIMARY KEY,
-            title TEXT,
-            vendor TEXT,
-            cost REAL,
-            pay_cycle TEXT,
-            expires_on TEXT)
-    ''')
-        
+        SELECT
+            id,
+            title,
+            CASE
+                WHEN pay_cycle = 'yearly' THEN cost
+                WHEN pay_cycle = 'quarterly' THEN cost * 4
+                WHEN pay_cycle = 'monthly' THEN cost * 12
+                WHEN pay_cycle = 'weekly' THEN cost * 52
+                ELSE NULL
+                END AS annual_cost,
+            expires_on
+        FROM Contracts
+        WHERE id = ?''',
+        (id,)
+    )
+    results = cursor.fetchall()
+    for row in results:
+        print(row)
