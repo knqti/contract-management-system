@@ -1,6 +1,6 @@
 import sqlite3
 from pathlib import Path
-from queries import select_all, view_contract_summary, view_contract_details, add_contract
+from queries import view_entire_table, view_contract_summary, view_contract_details, add_contract
 from setup import create_table, insert_data
 
 # Setup db
@@ -23,7 +23,7 @@ add_contract(
     '2029-05-27'
 )
 
-select_all(cursor)
+view_entire_table(cursor)
 
 cursor.close()
 connection.close()

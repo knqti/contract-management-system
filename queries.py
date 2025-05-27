@@ -1,4 +1,4 @@
-def select_all(cursor: object):
+def view_entire_table(cursor: object):
     cursor.execute('''SELECT * FROM Contracts''')
     results = cursor.fetchall()
     for row in results:
