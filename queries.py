@@ -48,3 +48,36 @@ def view_contract_details(cursor: object, id: int):
 
     for row in results:
         print(' | '.join(str(value) for value in row))
+
+def add_contract(
+    cursor: object,
+    connection: object,
+    title: str,
+    vendor: str,
+    cost: int,
+    pay_cycle: str,
+    expires_on: str
+):        
+    insert_values = {
+        'title': title,
+        'vendor': vendor,
+        'cost': cost,
+        'pay_cycle': pay_cycle,
+        'expires_on': expires_on
+    }
+    cursor.execute('''
+        INSERT INTO Contracts (
+            title,
+            vendor,
+            cost,
+            pay_cycle,
+            expires_on)
+        VALUES (
+            :title,
+            :vendor,
+            :cost,
+            :pay_cycle,
+            :expires_on)''',
+        insert_values
+    )
+    connection.commit()
