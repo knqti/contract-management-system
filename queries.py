@@ -22,5 +22,29 @@ def view_contract_summary(cursor: object, id: int):
         (id,)
     )
     results = cursor.fetchall()
+
+    headers = []
+    for description in cursor.description:
+        headers.append(description[0])
+    header =' | '.join(headers)
+
+    print(header)
+    print('-' * len(header))    
+    
     for row in results:
-        print(row)
+        print(' | '.join(str(value) for value in row))
+
+def view_contract_details(cursor: object, id: int):
+    cursor.execute('''SELECT * FROM Contracts WHERE id = ?''', (id,))
+    results = cursor.fetchall()
+    
+    headers = []
+    for description in cursor.description:
+        headers.append(description[0])
+    header =' | '.join(headers)
+
+    print(header)
+    print('-' * len(header))
+
+    for row in results:
+        print(' | '.join(str(value) for value in row))
