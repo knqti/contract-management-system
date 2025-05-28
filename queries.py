@@ -81,3 +81,43 @@ def add_contract(
         insert_values
     )
     connection.commit()
+
+def update_contract(
+    cursor: object,
+    id: int,
+    title: str=None,
+    vendor: str=None,
+    cost: int=None,
+    pay_cycle: str=None,
+    expires_on: str=None
+):
+    update_values = {
+        'title': title,
+        'vendor': vendor,
+        'cost': cost,
+        'pay_cycle': pay_cycle,
+        'expires_on': expires_on
+    }
+    
+    # Remove None values
+    update_values = {key: value for key, value in update_values.items() if value is not None}
+    
+    if not update_values:
+        print('No fields to update')
+        return
+    
+    # Add the id to the parameters
+    update_values['id'] = id
+    
+    # Build SET clause
+    set_clause = ', '.join([f'{key} = :{key}' for key in update_values.keys() if key != 'id'])
+    
+    # Single UPDATE query for all fields
+    cursor.execute(f'''
+        UPDATE Contracts
+        SET {set_clause}
+        WHERE id = :id''',
+        update_values
+    )
+    
+    print(f'Updated contract {id}\n')
