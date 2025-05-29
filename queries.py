@@ -84,6 +84,7 @@ def add_contract(
 
 def update_contract(
     cursor: object,
+    connection: object,
     id: int,
     title: str=None,
     vendor: str=None,
@@ -119,8 +120,9 @@ def update_contract(
         WHERE id = :id''',
         update_values
     )
+    connection.commit()
     
-    print(f'Updated contract {id}\n')
+    print(f'Updated contract {id}')
 
 def delete_contract(cursor: object, connection: object, id: int):
     cursor.execute('DELETE FROM Contracts WHERE id = ?', (id,))
