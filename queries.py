@@ -121,3 +121,14 @@ def update_contract(
     )
     
     print(f'Updated contract {id}\n')
+
+def delete_contract(cursor: object, connection: object, id: int):
+    cursor.execute('DELETE FROM Contracts WHERE id = ?', (id,))
+
+    # Check number of rows affected by last query
+    if cursor.rowcount == 0:
+        print(f'ID {id} not found. Nothing deleted.')
+        return
+
+    connection.commit()
+    print(f'ID {id} row deleted.')

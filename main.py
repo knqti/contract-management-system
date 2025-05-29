@@ -1,6 +1,6 @@
 import sqlite3
 from pathlib import Path
-from queries import view_entire_table, view_contract_summary, view_contract_details, add_contract, update_contract
+from queries import view_entire_table, view_contract_summary, view_contract_details, add_contract, update_contract, delete_contract
 from setup import create_table, insert_data
 
 # Setup db
@@ -23,15 +23,16 @@ cursor = connection.cursor()
 #     '2029-05-27'
 # )
 
+
+# update_contract(
+#     cursor=cursor, 
+#     id=54,
+#     title='Updated New Title',
+#     vendor='SecondFakeVendorName'
+# )
+
+delete_contract(cursor, connection, id=54)
 # view_entire_table(cursor)
-
-update_contract(
-    cursor=cursor, 
-    id=54,
-    title='Updated New Title',
-    vendor='SecondFakeVendorName'
-)
-
 view_contract_details(cursor, id=54)
 
 cursor.close()
