@@ -1,6 +1,6 @@
 # Contract Management System (CMS)
 
-A simple command-line interface for managing contracts using SQLite database.
+Proof-of-concept CMS using a command-line interface and SQLite database.
 
 ## Features
 
