@@ -6,14 +6,15 @@ from setup import create_table, insert_data
 
 # Set up database
 root_dir = Path(__file__).parent
+database = root_dir / 'cms.db'
 
-if not (root_dir / 'cms.db').exists():
-    create_table()    
-    insert_data()
-    print('Database created.')
-
-connection = sqlite3.connect(root_dir / 'cms.db')
+connection = sqlite3.connect(database)
 cursor = connection.cursor()
+
+if database.stat().st_size == 0:
+    create_table(connection, cursor)   
+    insert_data(connection, cursor)
+    print('Database created.')
 
 # Set up argparse
 parser = ArgumentParser()
